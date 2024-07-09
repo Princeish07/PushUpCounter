@@ -3,7 +3,7 @@ import 'dart:math' as math;
 import 'dart:math';
 
 import 'package:flutter/services.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
+import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -38,19 +38,25 @@ double angle(PoseLandmark firstLandmark, PoseLandmark midLandmark,
   }
   return degrees;
 }
-PushUpState? isPushUp(double angleElbow,PushUpState current){
-  final umbralElbow=60.0;
-  final umbralElbowExt=160.0;
 
-  print("First ${current}==${PushUpState.neutral} && ${angleElbow}>${umbralElbowExt} && ${angleElbow}< 180.0");
-  print("Second ${current}==${PushUpState.init} && ${angleElbow}<${umbralElbow} && ${angleElbow}< 40.0");
+PushUpState? isPushUp(double angleElbow, PushUpState current) {
+  final umbralElbow = 60.0;
+  final umbralElbowExt = 160.0;
 
-  if(current==PushUpState.neutral && angleElbow>umbralElbowExt&& angleElbow<180.0){
+  print(
+      "First ${current}==${PushUpState.neutral} && ${angleElbow}>${umbralElbowExt} && ${angleElbow}< 180.0");
+  print(
+      "Second ${current}==${PushUpState.init} && ${angleElbow}<${umbralElbow} && ${angleElbow}< 40.0");
+
+  if (current == PushUpState.neutral &&
+      angleElbow > umbralElbowExt &&
+      angleElbow < 180.0) {
     return PushUpState.init;
-  }else if(current==PushUpState.init && angleElbow<umbralElbow&& angleElbow>40.0){
+  } else if (current == PushUpState.init &&
+      angleElbow < umbralElbow &&
+      angleElbow > 40.0) {
     return PushUpState.complete;
-  }else{
+  } else {
     return PushUpState.init;
   }
-
 }

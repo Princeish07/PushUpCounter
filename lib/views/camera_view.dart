@@ -4,13 +4,11 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
-import 'package:google_mlkit_commons/google_mlkit_commons.dart';
+import 'package:google_mlkit_pose_detection/google_mlkit_pose_detection.dart';
 
 import '../models/push_up_model.dart';
 import '../painters/pose_painter.dart';
 import '../utils.dart';
-
 
 class CameraView extends StatefulWidget {
   CameraView(
@@ -50,7 +48,7 @@ class _CameraViewState extends State<CameraView> {
   PoseLandmark? p1;
   PoseLandmark? p2;
   PoseLandmark? p3;
-  int count=0;
+  int count = 0;
 
   @override
   void initState() {
@@ -103,7 +101,7 @@ class _CameraViewState extends State<CameraView> {
             count++;
             print("Counter $count");
 
-            if(count>50){
+            if (count > 50) {
               // showDialog(
               //     context: context,
               //     builder: (ctxt) => new AlertDialog(
@@ -111,20 +109,18 @@ class _CameraViewState extends State<CameraView> {
               //     )
               // );
               //
-               Navigator.pop(context);
+              print("Push up Stopped");
+              //  Navigator.pop(context);
               return;
             }
             bloc.setUpPushupState(PushUpState.init);
           } else if (rta == PushUpState.complete) {
-            count=0;
+            count = 0;
 
             bloc.increment();
             bloc.setUpPushupState(PushUpState.neutral);
           }
-        }else{
-
-
-        }
+        } else {}
       }
     }
     super.didUpdateWidget(oldWidget);
